@@ -17,6 +17,10 @@ public class ProductService {
 	public void createProduct(ProductEntity product) {
 		productRepo.save(product);
 	}
+
+	public ProductEntity fetchProduct(String productId){
+		return productRepo.findById(productId).orElse(null);
+	}
 	
 	public List<ProductEntity> fetchProducts(){
 		return productRepo.findAll();

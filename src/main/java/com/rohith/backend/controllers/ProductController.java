@@ -1,10 +1,7 @@
 package com.rohith.backend.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.rohith.backend.entity.ProductEntity;
 import com.rohith.backend.models.ProductModel;
@@ -26,10 +23,13 @@ public class ProductController {
 		productService.createProduct(p);
 	}
 
+	@GetMapping("/getProduct/{id}")
+	public ProductEntity getProduct(@PathVariable String id){
+		return productService.fetchProduct(id);
+	}
 	@GetMapping("/getProducts")
 	public List<ProductEntity> getProducts(){
 		return productService.fetchProducts();
-
 	}
 	
 
