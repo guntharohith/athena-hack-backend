@@ -12,6 +12,7 @@ import com.rohith.backend.services.OrderService;
 import com.rohith.backend.services.UserService;
 import com.rohith.backend.utility.JwtUtility;
 import org.aspectj.weaver.ast.Or;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -41,7 +42,11 @@ public class UserController {
 
     @PostMapping("/signup")
     public void addUser(@RequestBody UserEntity userEntity) throws Exception{
-        UserEntity user = new UserEntity(userEntity.getEmail(),userEntity.getUserName(),userEntity.getPassword(),true,"user");
+        String role = "user";
+        if(userEntity.getEmail().equals("admin@gmail.com")){
+            role = "admin";
+        }
+        UserEntity user = new UserEntity(userEntity.getEmail(),userEntity.getUserName(),userEntity.getPassword(), userEntity.getMobileNumber(), true,role);
         userService.createUser(user);
     }
 
@@ -86,5 +91,15 @@ public class UserController {
     @GetMapping("/get-orders")
     public List<OrderEntity> getOrders(Principal principal){
         return orderService.getOrders(principal.getName());
+    }
+
+    @GetMapping("/get-all-orders")
+    public List<OrderEntity> getAllOrders(){
+        return orderService.getAllOrders();
+    }
+
+    @DeleteMapping("/delete-order/{orderId}")
+    public void deleteOrder(@PathVariable int orderId){
+        orderService.removeOrder(orderId);
     }
 }

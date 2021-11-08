@@ -18,4 +18,12 @@ public class OrderService {
     public List<OrderEntity> getOrders(String email){
         return orderRepo.findByEmail(email);
     }
+
+    public List<OrderEntity> getAllOrders(){
+        return orderRepo.findAll();
+    }
+
+    public void removeOrder(int id){
+        orderRepo.deleteById(id);
+    }
 }

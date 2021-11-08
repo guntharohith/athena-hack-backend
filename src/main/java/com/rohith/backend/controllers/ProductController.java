@@ -35,30 +35,13 @@ public class ProductController {
 		return productService.fetchProducts();
 	}
 
-	@PutMapping("/updateProduct/{productId}")
-	public ProductEntity updateCollege(@PathVariable("productId") String productId, @RequestBody ProductEntity productEntity) {
-
-		ProductEntity p = productRepo.findProductById(productId);
-		p.setName(productEntity.getName());
-		p.setPrice(productEntity.getPrice());
-		p.setDescription(productEntity.getDescription());
-		p.setCompany(productEntity.getCompany());
-		p.setStock(productEntity.getStock());
-		p.setStars(productEntity.getStars());
-		p.setReviews(productEntity.getReviews());
-		p.setCategory(productEntity.getCategory());
-		p.setShipping(productEntity.isShipping());
-		productRepo.save(p);
-
-		return p;
-
+	@PutMapping("/updateProduct/{id}")
+	public ProductEntity updateProduct(@PathVariable String id, @RequestBody ProductEntity productEntity) {
+		return productService.editProduct(id,productEntity);
 	}
-	@DeleteMapping("/deleteProduct/{productId}")
-	public void deleteCollege(@PathVariable("productId") String productId) {
-
-		ProductEntity p = productRepo.findProductById(productId);
-		productRepo.delete(p);
-
+	@DeleteMapping("/deleteProduct/{id}")
+	public void deleteProduct(@PathVariable String id) {
+		productService.removeProduct(id);
 	}
 
 
